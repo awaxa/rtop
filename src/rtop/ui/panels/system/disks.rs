@@ -7,7 +7,8 @@ use tui::layout::{Layout, Direction, Rect, Constraint};
 use tui::style::{Color, Modifier, Style};
 
 pub fn disk_usage_panel<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect) {
-    let num_drives = app.datastreams.disk_info.disk_usage.len() as u16;
+    let mut num_drives = app.datastreams.disk_info.disk_usage.len() as u16;
+    if num_drives == 0 { num_drives += 1 }
     let gauge_width: u16 = 100 / num_drives;
     let constraints = (0..num_drives).map(|_| {Constraint::Percentage(gauge_width)})
                                 .collect::<Vec<Constraint>>();
